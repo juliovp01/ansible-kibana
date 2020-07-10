@@ -1,0 +1,11 @@
+- name: Kibana Install
+  hosts: "{{ target_hosts | default('all') }}"
+  become: yes
+  gather_facts: yes
+  roles:
+  - role: kibana
+    kibana_config:
+        server.name: "{{ inventory_hostname }}"
+        server.port: 5601
+        server.host: "{{ ansible_default_ipv4.address }}"
+        elasticsearch.hosts: "http://{{ ansible_default_ipv4.address }}:9200"
